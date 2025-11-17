@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cauã Rodrigues - Timeless</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #6D28D9;
+      --purple-light: #A78BFA;
+      --purple-dark: #4C1D95;
+      --lavender: #E9D5FF;
+      --light: #FAF5FF;
+      --gray: #6B7280;
+      --dark: #1F2937;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #FAF5FF 0%, #E9D5FF 100%);
+      color: var(--dark);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .profile-card {
+      background: white;
+      border-radius: 2rem;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(109, 40, 217, 0.15);
+      max-width: 1000px;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+    }
+    .profile-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(109, 40, 217, 0.2);
+    }
+    .header {
+      background: linear-gradient(to right, var(--purple), var(--purple-light));
+      color: white;
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+    .avatar {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 6px solid white;
+      object-fit: cover;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      margin: -90px auto 1.5rem;
+      position: relative;
+      z-index: 10;
+      background: white;
+    }
+    .content {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    @media (max-width: 768px) {
+      .content { grid-template-columns: 1fr; }
+      .header h1 { font-size: 2rem; }
+      .avatar { width: 140px; height: 140px; margin: -70px auto 1rem; }
+    }
+    .card {
+      background: #F8FAFC;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      border: 2px solid #E5E7EB;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: linear-gradient(to right, var(--purple), var(--purple-light));
+      border-radius: 1.5rem 1.5rem 0 0;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(109, 40, 217, 0.15);
+      border-color: var(--purple-light);
+    }
+    .card h3 {
+      color: var(--purple-dark);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+    }
+    .highlight {
+      background: linear-gradient(120deg, #E9D5FF, #D8B4FE);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      color: var(--purple-dark);
+      text-align: center;
+    }
+
+    /* Container das medalhas - quadrado com bordas arredondadas */
+    .medal-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: #F1F5F9;
+      padding: 1.5rem;
+      border-radius: 1.5rem;
+      border: 2px solid #E5E7EB;
+      margin-top: 1rem;
+      max-width: 380px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Cada medalha - espaço quadrado fixo */
+    .medal {
+      width: 70px;
+      height: 70px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--purple-light);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+    .medal:hover {
+      transform: scale(1.15) rotate(12deg);
+      box-shadow: 0 8px 20px rgba(167, 139, 250, 0.3);
+      border-color: var(--purple);
+    }
+    .medal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* imagem sempre completa, ampliada se necessário */
+    }
+
+    .weapon-card {
+      text-align: center;
+    }
+    .weapon-card img {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+      margin: 1rem auto;
+      border-radius: 1rem;
+      background: white;
+      padding: 0.5rem;
+    }
+    .attack-list {
+      text-align: left;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--gray);
+    }
+    .attack-list li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .attack-list li::before {
+      content: "→";
+      color: var(--purple);
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+    .btn-voltar {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: var(--purple);
+      color: white;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(109, 40, 217, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+    }
+    .btn-voltar:hover {
+      background: var(--purple-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(76, 29, 149, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <a href="../Site do TCC definitivo 1.0.html" class="btn-voltar">
+    <i class="fas fa-arrow-left"></i> Voltar
+  </a>
+
+  <div class="profile-card">
+    <div class="header">
+      <h1>Cauã Rodrigues</h1>
+      <p>Programador & Designer de Sistemas</p>
+    </div>
+
+    <img src="../imagens/cauar1.png" alt="Foto de Cauã Rodrigues" class="avatar">
+
+    <div class="content">
+      <!-- Status -->
+      <div class="card">
+        <h3><i class="fas fa-heartbeat"></i> Status</h3>
+        <div class="stat-grid">
+          <div><strong>Vida:</strong> <span class="highlight">19</span></div>
+          <div><strong>Nível:</strong> <span class="highlight">2</span></div>
+          <div><strong>Moedas:</strong> <span class="highlight">0</span></div>
+          <div><strong>XP:</strong> 120 / 500</div>
+        </div>
+      </div>
+
+      <!-- Níveis por Classe -->
+      <div class="card">
+        <h3><i class="fas fa-layer-group"></i> Nível por Classe</h3>
+        <div class="stat-grid">
+          <div>Mago: <strong>0</strong></div>
+          <div>Mercador: <strong>0</strong></div>
+          <div>Artificer: <strong>1</strong></div>
+          <div>Cavaleiro: <strong>2</strong></div>
+          <div>Herói: <strong>0</strong></div>
+          <div class="col-span-2 text-center mt-2"><strong>Total: 2</strong></div>
+        </div>
+      </div>
+
+      <!-- Medalhas - com container quadrado e imagens completas -->
+      <div class="card">
+        <h3><i class="fas fa-medal"></i> Conquistas</h3>
+        <div class="medal-container">
+          <div class="medal"><img src="../imagens/espantalho.png" alt="Medalha 1"></div>
+          <div class="medal"><img src="../imagens/reigoblin.png" alt="Medalha 2"></div>
+          <div class="medal"><img src="../imagens/aracna.png" alt="Medalha 3"></div>
+          <div class="medal"><img src="../imagens/vorgram.png" alt="Medalha 4"></div>
+          <div class="medal"><img src="../imagens/tri.png" alt="Medalha 5"></div>
+          <div class="medal"><img src="../imagens/basilisco.png" alt="Medalha 6"></div>
+          <div class="medal"><img src="../imagens/tiao.png" alt="Medalha 7"></div>
+        </div>
+      </div>
+
+      <!-- Arma -->
+      <div class="card weapon-card">
+        <h3><i class="fas fa-gem"></i> Arma Equipada</h3>
+        <p class="font-bold text-lg text-purple-700">Solo de Hades</p>
+        <img src="../imagens/lanca.png" alt="Solo de Hades">
+        <p class="text-sm text-gray-600 mt-2">+5 Força | +3 Resistência ao Fogo</p>
+      </div>
+
+      <!-- Ataques -->
+      <div class="card" style="grid-column: span 2;">
+        <h3><i class="fas fa-bolt"></i> Habilidades & Ataques</h3>
+        <ul class="attack-list">
+          <li><strong>A:</strong> 2 de dano</li>
+          <li><strong>2:</strong> 3 de dano</li>
+          <li><strong>3:</strong> 3 de dano</li>
+          <li><strong>4:</strong> 8 de dano</li>
+          <li><strong>5:</strong> 11 de dano</li>
+          <li><strong>6:</strong> 3 de dano</li>
+          <li><strong>7:</strong> 3 de dano</li>
+          <li><strong>8:</strong> 8 de dano</li>
+          <li><strong>9:</strong> 10 de dano</li>
+          <li><strong>10:</strong> 8 de dano</li>
+          <li><strong>J:</strong> (Sem efeito)</li>
+          <li><strong>Q:</strong> (Sem efeito)</li>
+          <li><strong>K:</strong> (Sem efeito)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

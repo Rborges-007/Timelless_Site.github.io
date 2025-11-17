@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Timeless é um jogo desenvolvido para um projeto de TCC, unindo código, arte e aventura.">
+  <meta name="keywords" content="Timeless, jogo, TCC, aventura, desenvolvimento">
+  <link rel="icon" href="imagens/favicon.ico" type="image/x-icon">
+  <title>Timeless - TCC Project</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --cor-purple: #1E3A8A;
+      --cor-blue: #60A5FA;
+      --cor-orange: #4169E1;
+      --cor-pink: #BFDBFE;
+      --cor-dark: #1E3A8A;
+      --cor-light: #F0F8FF;
+      --glass-border: rgba(191, 219, 254, 0.1);
+    }
+    
+    html {
+      font-size: 16px; /* Controlado pelo JavaScript */
+    }
+    
+    html, body { 
+      height: 100%; 
+      margin: 0; 
+      scroll-behavior: smooth; 
+      overflow-x: hidden;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--cor-dark);
+      background: #E6F0FA;
+      line-height: 1.6;
+    }
+    
+    /* === MODO ALTO CONTRASTE TOTAL === */
+    body.alto-contraste {
+      --cor-dark: #000033 !important;
+      --cor-light: #FFD700 !important;
+      --cor-purple: #000066 !important;
+      --cor-blue: #00BFFF !important;
+      --cor-orange: #FF8C00 !important;
+      --cor-pink: #FFB6C1 !important;
+      background: #000033 !important;
+      color: #FFD700 !important;
+    }
+
+    body.alto-contraste * {
+      color: #FFD700 !important;
+      background-color: transparent !important;
+      border-color: #FFD700 !important;
+    }
+
+    body.alto-contraste a,
+    body.alto-contraste .btn,
+    body.alto-contraste button {
+      color: #FFD700 !important;
+      background: rgba(255, 215, 0, 0.2) !important;
+      border: 2px solid #FFD700 !important;
+      text-shadow: none !important;
+    }
+
+    body.alto-contraste a:hover,
+    body.alto-contraste .btn:hover,
+    body.alto-contraste button:hover {
+      background: rgba(255, 215, 0, 0.4) !important;
+      transform: translateY(-2px);
+    }
+
+    body.alto-contraste .digital-clock,
+    body.alto-contraste .main-nav {
+      background: #000033 !important;
+      color: #FFD700 !important;
+      border-bottom: 2px solid #FFD700 !important;
+    }
+
+    body.alto-contraste .hero-section,
+    body.alto-contraste .features-section,
+    body.alto-contraste footer {
+      background: #000033 !important;
+    }
+
+    body.alto-contraste .bg-white,
+    body.alto-contraste .bg-gradient-to-br,
+    body.alto-contraste .shadow-lg {
+      background: rgba(0, 0, 51, 0.8) !important;
+      border: 1px solid #FFD700 !important;
+    }
+
+    body.alto-contraste img {
+      opacity: 0.9;
+      filter: brightness(1.1) contrast(1.2);
+      border: 2px solid #FFD700;
+    }
+
+    body.alto-contraste [class*="bg-gradient"] {
+      background: none !important;
+      color: #FFD700 !important;
+      -webkit-background-clip: initial !important;
+    }
+
+    .digital-clock {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--cor-dark);
+      color: var(--cor-pink);
+      text-align: center;
+      padding: 10px;
+      font-family: 'Courier New', monospace;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    .main-nav {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      background: rgba(30, 58, 138, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 999;
+      padding: 15px 0;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+    }
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+    
+    .nav-links a {
+      color: var(--cor-light);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+      background: var(--cor-orange);
+      transform: translateY(-2px);
+    }
+    
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1E3A8A 0%, #4169E1 100%);
+      margin-top: 110px;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      color: var(--cor-light);
+      max-width: 800px;
+      padding: 0 20px;
+    }
+    
+    .hero-title {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      background: linear-gradient(to right, var(--cor-pink), var(--cor-orange));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+      text-align: center;
+    }
+    
+    .btn-primary {
+      background: var(--cor-orange);
+      color: var(--cor-light);
+      box-shadow: 0 4px 10px rgba(65, 105, 225, 0.3);
+    }
+    
+    .btn-primary:hover {
+      background: #3B5CCF;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(65, 105, 225, 0.4);
+    }
+    
+    .scroll-to-top {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background: var(--cor-blue);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 100;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    .scroll-to-top.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .scroll-to-top:hover {
+      background: var(--cor-orange);
+      transform: translateY(-3px);
+    }
+    
+    .acessibilidade-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--cor-orange);
+      color: var(--cor-light);
+      border: none;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      font-size: 26px;
+      cursor: pointer;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .acessibilidade-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+    
+    .painel-acessibilidade {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background: var(--cor-purple);
+      border-radius: 12px;
+      padding: 15px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1999;
+      width: 240px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    .painel-acessibilidade.active { 
+      display: flex; 
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .painel-acessibilidade button {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      background: var(--cor-light);
+      color: var(--cor-dark);
+      transition: background 0.2s, transform 0.2s;
+    }
+    
+    .painel-acessibilidade button:hover {
+      background: var(--cor-pink);
+      transform: scale(1.03);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-direction: column;
+        gap: 10px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(30, 58, 138, 0.95);
+        padding: 20px;
+        display: none;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-toggle {
+        display: block;
+      }
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+      .scroll-to-top {
+        right: 20px;
+        bottom: 90px;
+      }
+      .hero-section {
+        margin-top: 100px;
+      }
+      .digital-clock {
+        font-size: 1.2rem;
+        padding: 8px;
+      }
+    }
+    
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--cor-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 5px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--cor-orange);
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .development-highlight {
+      background: linear-gradient(to bottom, #F0F8FF, #BFDBFE);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      margin-top: 2rem;
+    }
+
+    .development-highlight h3 {
+      font-size: 1.5rem;
+      color: var(--cor-orange);
+    }
+
+    .progress-gallery img {
+      transition: transform 0.3s ease;
+    }
+
+    .progress-gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    [id^="titulo-"]:focus {
+      outline: 3px solid var(--cor-orange);
+      outline-offset: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen" aria-hidden="true">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Digital Clock -->
+  <div class="digital-clock" id="digitalClock" aria-live="polite">00:00:00</div>
+
+  <!-- Navigation -->
+  <nav class="main-nav" aria-label="Navegação principal">
+    <div class="nav-container">
+      <div class="logo">
+        <h2 class="text-xl font-bold text-[var(--cor-light)]">Timeless</h2>
+      </div>
+      <div class="nav-links" id="navLinks" role="navigation">
+        <a href="#titulo-inicio" aria-current="page">Início</a>
+        <a href="#titulo-story">História</a>
+        <a href="#titulo-characters">Personagens</a>
+        <a href="#titulo-objective">Objetivo</a>
+        <a href="#titulo-team">Equipe</a>
+        <a href="#titulo-development">Desenvolvimento</a>
+        <a href="#titulo-features">Características</a>
+        <a href="#titulo-andamento">Demonstração</a>
+      </div>
+      <button class="nav-toggle md:hidden text-[var(--cor-light)]" id="navToggle" aria-controls="navLinks" aria-expanded="false" aria-label="Alternar menu de navegação">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="inicio" class="hero-section" aria-labelledby="titulo-inicio">
+    <div class="hero-content">
+      <h1 id="titulo-inicio" class="hero-title">Timeless</h1>
+      <p class="hero-subtitle">Uma jornada através dos sonhos e pesadelos de um adolescente em busca de sua identidade.</p>
+      <div class="mt-8 flex gap-4 justify-center flex-wrap">
+        <a href="#titulo-story" class="btn btn-primary">Conheça a História</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Sections -->
+  <section class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Sinopse -->
+      <section id="story" class="mb-20" aria-labelledby="titulo-story">
+        <div class="text-center mb-12">
+          <h2 id="titulo-story" class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-800 to-blue-600 bg-clip-text text-transparent mb-6">
+            Sinopse
+          </h2>
+          <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <!-- Texto -->
+          <div class="space-y-6 order-2 md:order-1">
+            <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+              Em <strong class="text-blue-700 font-semibold">Timeless</strong>, você joga como um adolescente comum que desperta de um sonho perturbador — ou assim parece. 
+              Aos poucos, o mundo ao seu redor começa a se distorcer.
+            </p>
+            <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+              <span class="text-blue-600 font-medium">Vozes sussurram</span>, os amigos desaparecem, a cidade parece vazia... e uma <strong>presença invisível</strong> o persegue a cada passo.
+            </p>
+            <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+              À medida que explora esse mundo em constante mudança, o protagonista descobre que não está apenas tentando escapar, mas também <strong>desvendando os segredos de sua própria mente e identidade</strong>.
+            </p>
+          </div>
+          <!-- Imagem -->
+          <div class="order-1 md:order-2">
+            <div class="relative group">
+              <img 
+                src="imagens/sinopse-ilustracao.png" 
+                alt="Ilustração da sinopse: adolescente em um mundo onírico e distorcido" 
+                class="w-full rounded-2xl shadow-xl object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Personagens -->
+      <section id="characters" class="mb-20" aria-labelledby="titulo-characters">
+        <div class="text-center mb-12">
+          <h2 id="titulo-characters" class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-800 to-blue-600 bg-clip-text text-transparent mb-6">
+            Personagens
+          </h2>
+          <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="group">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="p-6 text-center">
+                <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100 group-hover:border-blue-300 transition-colors">
+                  <img src="imagens/personagem1.png" alt="Imagem do personagem Akira" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">Akira</h3>
+                <p class="text-gray-600 text-base leading-relaxed">O protagonista, um adolescente em busca de sua identidade, enfrenta sonhos e pesadelos que desafiam sua percepção da realidade.</p>
+              </div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="p-6 text-center">
+                <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-purple-100 group-hover:border-purple-300 transition-colors">
+                  <img src="imagens/personagem2.png" alt="Imagem do personagem imaginario" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">Pom-pom</h3>
+                <p class="text-gray-600 text-base leading-relaxed">Uma figura que guia Akira, se oferecendo como apoio a ele dentro desse mundo dos sonhos e seus segredos.</p>
+              </div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="p-6 text-center">
+                <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-pink-100 group-hover:border-pink-300 transition-colors">
+                  <img src="imagens/personagem3.png" alt="Imagem do personagem Sombra" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">Morte</h3>
+                <p class="text-gray-600 text-base leading-relaxed">Uma presença inquietante que persegue Akira, representando seus medos mais profundos e desafiando sua coragem.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Objetivo -->
+      <section id="objective" class="mb-20" aria-labelledby="titulo-objective">
+        <div class="text-center mb-12">
+          <h2 id="titulo-objective" class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-800 to-blue-600 bg-clip-text text-transparent mb-6">
+            Objetivo
+          </h2>
+          <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
+        </div>
+        <div class="grid lg:grid-cols-3 gap-8">
+          <div class="lg:col-span-2">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-blue-100">
+              <h3 class="text-2xl font-bold text-gray-800 mb-4">Escapar da morte</h3>
+              <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                O seu objetivo como jogador é levar Akira até a última fase do jogo no menor tempo possível, mas também sabendo abdicar das coisas certas para um melhor avanço e conseguir zerar e vencer o Timeless.
+              </p>
+              <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="text-center p-4 bg-blue-50 rounded-xl">
+                  <i class="fas fa-running text-2xl text-blue-600 mb-2" aria-hidden="true"></i>
+                  <p class="font-medium">Plataforma</p>
+                </div>
+                <div class="text-center p-4 bg-purple-50 rounded-xl">
+                  <i class="fas fa-lightbulb text-2xl text-purple-600 mb-2" aria-hidden="true"></i>
+                  <p class="font-medium">Quebra-cabeças</p>
+                </div>
+                <div class="text-center p-4 bg-indigo-50 rounded-xl">
+                  <i class="fas fa-book-open text-2xl text-indigo-600 mb-2" aria-hidden="true"></i>
+                  <p class="font-medium">Narrativa</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div></div>
+        </div>
+      </section>
+
+      <!-- Equipe -->
+      <section id="team" class="mb-20" aria-labelledby="titulo-team">
+        <div class="text-center mb-12">
+          <h2 id="titulo-team" class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-800 to-blue-600 bg-clip-text text-transparent mb-6">
+            Nossa Equipe
+          </h2>
+          <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          <div class="group">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="p-6 text-center">
+                <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100 group-hover:border-blue-300 transition-colors">
+                  <img src="imagens/perfil-Maria_Queiros.png" alt="Foto de perfil de Maria Eduarda Queirós" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">Maria Eduarda Queirós</h3>
+                <p class="text-blue-600 font-semibold mb-4">Coordenadora & Programadora</p>
+                <a href="perfis/maria-queiros.html" class="inline-flex items-center gap-2 text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200">
+                  <i class="fas fa-user" aria-hidden="true"></i>
+                  <span>Perfil</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="p-6 text-center">
+                <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-green-100 group-hover:border-green-300 transition-colors bg-gradient-to-br from-green-50 to-emerald-50">
+                  <img src="imagens/joao.png" alt="Foto de perfil de João Matheus" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">João Matheus</h3>
+                <p class="text-green-600 font-semibold mb-4">Site & Pixel Arts</p>
+                <a href="perfis/joao-matheus.html" class="inline-flex items-center gap-2 text-sm bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-200">
+                  <i class="fas fa-user" aria-hidden="true"></i>
+                  <span>Perfil</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="p-6 text-center">
+                <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-purple-100 group-hover:border-purple-300 transition-colors bg-gradient-to-br from-purple-50 to-violet-50">
+                  <img src="imagens/Malu_souza.png" alt="Foto de perfil de Maria Luiza" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">Maria Luiza</h3>
+                <p class="text-purple-600 font-semibold mb-4">Documentação & Áudio</p>
+                <a href="perfis/maria-luiza.html" class="inline-flex items-center gap-2 text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-200">
+                  <i class="fas fa-user" aria-hidden="true"></i>
+                  <span>Perfil</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="p-6 text-center">
+                <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-pink-100 group-hover:border-pink-300 transition-colors bg-gradient-to-br from-pink-50 to-rose-50">
+                  <img src="imagens/Nicole.png" alt="Foto de perfil de Nicole" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">Nicole</h3>
+                <p class="text-pink-600 font-semibold mb-4">Pixel Arts</p>
+                <a href="perfis/nicole.html" class="inline-flex items-center gap-2 text-sm bg-gradient-to-r from-pink-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-pink-600 hover:to-pink-700 transition-all duration-200">
+                  <i class="fas fa-user" aria-hidden="true"></i>
+                  <span>Perfil</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="p-6 text-center">
+                <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-orange-100 group-hover:border-orange-300 transition-colors bg-gradient-to-br from-orange-50 to-amber-50">
+                  <img src="imagens/caua.png" alt="Foto de perfil de Cauã Rodrigues" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">Cauã Rodrigues</h3>
+                <p class="text-orange-600 font-semibold mb-4">Pixel Arts</p>
+                <a href="perfis/caua-rodrigues.html" class="inline-flex items-center gap-2 text-sm bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200">
+                  <i class="fas fa-user" aria-hidden="true"></i>
+                  <span>Perfil</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Desenvolvimento -->
+      <section id="development" class="mb-20 development-highlight" aria-labelledby="titulo-development">
+        <div class="text-center mb-12">
+          <h2 id="titulo-development" class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-800 to-blue-600 bg-clip-text text-transparent mb-6">
+            Trajetória de Desenvolvimento
+          </h2>
+          <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
+          <p class="text-lg text-gray-600 mt-4">Nosso caminho trilhado no TCC: do conceito à implementação, com atualizações constantes.</p>
+        </div>
+        <div class="space-y-12 max-w-4xl mx-auto">
+          <div class="flex items-start space-x-4 group">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">1</div>
+            <div class="flex-1 pt-1">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Roteiro e conceituação</h3>
+              <p class="text-sm text-gray-500 mb-1">Setembro 2025</p>
+              <p class="text-gray-600">Brainstorm de ideias, definição de escopo e criação do conceito do jogo.</p>
+              <img src="imagens/progresso-roteiro.png" alt="Progresso da etapa de roteiro e conceituação" class="mt-4 rounded-lg shadow-md w-full" loading="lazy">
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 group">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">2</div>
+            <div class="flex-1 pt-1">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Início da Documentação</h3>
+              <p class="text-sm text-gray-500 mb-1">Outubro 2025</p>
+              <p class="text-gray-600">Elaboração de documentos de design, requisitos e storyboards.</p>
+              <img src="imagens/progresso-documentacao.png" alt="Progresso da etapa de documentação" class="mt-4 rounded-lg shadow-md w-full" loading="lazy">
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 group">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">3</div>
+            <div class="flex-1 pt-1">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Início da Programação</h3>
+              <p class="text-sm text-gray-500 mb-1">Outubro 2025</p>
+              <p class="text-gray-600">Configuração do ambiente e primeiras mecânicas do jogo.</p>
+              <img src="imagens/progresso-programacao.png" alt="Progresso da etapa de programação" class="mt-4 rounded-lg shadow-md w-full" loading="lazy">
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 group">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">Atualização</div>
+            <div class="flex-1 pt-1">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Atualizações Atuais</h3>
+              <p class="text-sm text-gray-500 mb-1">Em andamento</p>
+              <p class="text-gray-600">Adição de features, testes e refinamentos.</p>
+              <img src="imagens/progresso-atual.png" alt="Progresso das atualizações atuais" class="mt-4 rounded-lg shadow-md w-full" loading="lazy">
+            </div>
+          </div>
+          <div class="progress-gallery grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+            <img src="imagens/progresso-extra1.png" alt="Imagem adicional de progresso 1" class="rounded-lg shadow-md w-full" loading="lazy">
+            <img src="imagens/progresso-extra2.png" alt="Imagem adicional de progresso 2" class="rounded-lg shadow-md w-full" loading="lazy">
+            <img src="imagens/progresso-extra3.png" alt="Imagem adicional de progresso 3" class="rounded-lg shadow-md w-full" loading="lazy">
+          </div>
+        </div>
+      </section>
+
+      <!-- Demonstração -->
+      <section id="andamento" class="mb-20" aria-labelledby="titulo-andamento">
+        <div class="text-center mb-12">
+          <h2 id="titulo-andamento" class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-800 to-blue-600 bg-clip-text text-transparent mb-6">
+            Demonstração do Andamento
+          </h2>
+          <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
+        </div>
+        <div class="max-w-4xl mx-auto">
+          <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            <div class="p-8 text-center">
+              <h3 class="text-2xl font-bold text-gray-800 mb-6">Assista ao progresso atual</h3>
+              <div class="relative mx-auto max-w-4xl w-full aspect-video rounded-2xl overflow-hidden shadow-xl">
+                <iframe src="https://www.youtube.com/embed/Iulyefs9puM" title="Demonstração do progresso do jogo Timeless" allowfullscreen class="w-full h-full" loading="lazy"></iframe>
+              </div>
+              <div class="mt-6">
+                <a href="https://youtube.com/shorts/Iulyefs9puM" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                  <i class="fab fa-youtube" aria-hidden="true"></i>
+                  <span>Assistir no YouTube</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features-section py-20 bg-gradient-to-br from-blue-900 to-purple-900" id="features" aria-labelledby="titulo-features">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 id="titulo-features" class="text-4xl md:text-5xl font-bold text-white mb-6">Características do Jogo</h2>
+        <p class="text-xl text-blue-100 max-w-3xl mx-auto">Descubra o que torna Timeless uma experiência única</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="feature-card group">
+          <div class="feature-icon text-5xl text-blue-300 mb-6"><i class="fas fa-brain" aria-hidden="true"></i></div>
+          <h3 class="text-xl font-bold text-white mb-4">Narrativa Psicológica</h3>
+          <p class="text-blue-100">História profunda sobre a mente humana.</p>
+        </div>
+        <div class="feature-card group">
+          <div class="feature-icon text-5xl text-purple-300 mb-6"><i class="fas fa-puzzle-piece" aria-hidden="true"></i></div>
+          <h3 class="text-xl font-bold text-white mb-4">Quebra-Cabeças</h3>
+          <p class="text-blue-100">Desafios que testam sua percepção.</p>
+        </div>
+        <div class="feature-card group">
+          <div class="feature-icon text-5xl text-emerald-300 mb-6"><i class="fas fa-mountain" aria-hidden="true"></i></div>
+          <h3 class="text-xl font-bold text-white mb-4">Plataforma</h3>
+          <p class="text-blue-100">Movimentos fluidos e precisos.</p>
+        </div>
+        <div class="feature-card group">
+          <div class="feature-icon text-5xl text-pink-300 mb-6"><i class="fas fa-palette" aria-hidden="true"></i></div>
+          <h3 class="text-xl font-bold text-white mb-4">Pixel Art</h3>
+          <p class="text-blue-100">Visual retro moderno único.</p>
+        </div>
+      </div>
+    </div>
+    <style>
+      .features-section .feature-card {
+        background: rgba(255,255,255,0.1);
+        padding: 2.5rem;
+        border-radius: 20px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: all 0.4s ease;
+      }
+      .features-section .feature-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        background: rgba(255,255,255,0.2);
+        border-color: rgba(255,255,255,0.3);
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+      }
+      .features-section .feature-card .feature-icon {
+        transition: transform 0.3s ease;
+      }
+      .features-section .feature-card:hover .feature-icon {
+        transform: scale(1.1) rotate(5deg);
+      }
+    </style>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-blue-900 to-purple-900 text-white py-16" aria-label="Rodapé">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="footer-section">
+          <h3 class="text-2xl font-bold mb-6">Sobre o Timeless</h3>
+          <p class="text-blue-200 leading-relaxed">Jogo de TCC combinando plataforma, quebra-cabeças e narrativa psicológica.</p>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-2xl font-bold mb-6">Links Rápidos</h3>
+          <ul class="space-y-3">
+            <li><a href="#titulo-inicio" class="text-blue-200 hover:text-white transition-colors">Início</a></li>
+            <li><a href="#titulo-story" class="text-blue-200 hover:text-white transition-colors">História</a></li>
+            <li><a href="#titulo-characters" class="text-blue-200 hover:text-white transition-colors">Personagens</a></li>
+            <li><a href="#titulo-objective" class="text-blue-200 hover:text-white transition-colors">Objetivo</a></li>
+            <li><a href="#titulo-team" class="text-blue-200 hover:text-white transition-colors">Equipe</a></li>
+            <li><a href="#titulo-development" class="text-blue-200 hover:text-white transition-colors">Desenvolvimento</a></li>
+            <li><a href="#titulo-features" class="text-blue-200 hover:text-white transition-colors">Características</a></li>
+            <li><a href="#titulo-andamento" class="text-blue-200 hover:text-white transition-colors">Demonstração</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="text-2xl font-bold mb-6">Contato</h3>
+          <p class="mb-6"><a href="mailto:contato@timelessgame.com" class="text-blue-200 hover:text-white transition-colors">contato@timelessgame.com</a></p>
+          <div class="flex gap-4">
+            <a href="https://www.instagram.com/timeless_aec?igsh=aGEzbDlpZ3Nnamdq" aria-label="Instagram do Timeless" class="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300" target="_blank" rel="noopener"><i class="fab fa-instagram text-2xl" aria-hidden="true"></i></a>
+            <a href="https://www.youtube.com/@Jota%E6%84%9B_01" aria-label="YouTube do Timeless" class="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300" target="_blank" rel="noopener"><i class="fab fa-youtube text-2xl" aria-hidden="true"></i></a>
+            <a href="https://github.com/timelessgame" aria-label="GitHub do Timeless" class="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300" target="_blank" rel="noopener"><i class="fab fa-github text-2xl" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-white/10 mt-12 pt-8 text-center">
+        <p>© 2025 Timeless - A Eternidade de Cronos. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top & Accessibility -->
+  <button class="scroll-to-top" id="scrollToTop" aria-label="Voltar ao topo"><i class="fas fa-chevron-up" aria-hidden="true"></i></button>
+  <button id="acessibilidadeBtn" class="acessibilidade-btn" aria-label="Abrir menu de acessibilidade">Acessibilidade</button>
+  <div id="painelAcessibilidade" class="painel-acessibilidade" role="menu" aria-label="Opções de acessibilidade">
+    <button id="aumentarFonte" aria-label="Aumentar tamanho da fonte em 2px">A+ <span class="text-xs">(16px)</span></button>
+    <button id="diminuirFonte" aria-label="Diminuir tamanho da fonte em 2px">A- <span class="text-xs">(16px)</span></button>
+    <button id="altoContraste" aria-label="Ativar modo de alto contraste">Alto Contraste</button>
+    <button id="resetarAcessibilidade" aria-label="Resetar configurações de acessibilidade">Resetar</button>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // === ROLAGEM SUAVE COM FOCO NO TÍTULO ===
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#' || href === '') return;
+        e.preventDefault();
+
+        const targetElement = document.querySelector(href);
+        if (targetElement) {
+          const fixedHeaderHeight = 120;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = targetPosition - fixedHeaderHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+
+          const navLinks = document.getElementById('navLinks');
+          const navToggle = document.getElementById('navToggle');
+          if (navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+          }
+
+          document.querySelectorAll('.nav-links a').forEach(link => {
+            link.removeAttribute('aria-current');
+          });
+          this.setAttribute('aria-current', 'page');
+
+          targetElement.setAttribute('tabindex', '-1');
+          setTimeout(() => targetElement.focus(), 600);
+        }
+      });
+    });
+
+    // === ARIA-CURRENT NO CARREGAMENTO ===
+    window.addEventListener('load', () => {
+      const currentHash = window.location.hash || '#titulo-inicio';
+      const currentLink = document.querySelector(`.nav-links a[href="${currentHash}"]`);
+      if (currentLink) {
+        document.querySelectorAll('.nav-links a').forEach(link => link.removeAttribute('aria-current'));
+        currentLink.setAttribute('aria-current', 'page');
+      }
+    });
+
+    // === ALTO CONTRASTE COM MUDANÇA DE TEXTO ===
+    let contrasteAtivo = false;
+    document.getElementById("altoContraste").onclick = () => { 
+      contrasteAtivo = !contrasteAtivo; 
+      document.body.classList.toggle('alto-contraste', contrasteAtivo); 
+      document.getElementById("altoContraste").textContent = contrasteAtivo ? "Desativar Contraste" : "Alto Contraste";
+    };
+
+    // === ACESSIBILIDADE DE FONTE: +2px / -2px POR CLIQUE ===
+    let baseFontSize = 16;
+    const minFontSize = 10;
+    const maxFontSize = 30;
+    const step = 2;
+
+    function updateFontSize() {
+      document.documentElement.style.fontSize = `${baseFontSize}px`;
+      document.getElementById("aumentarFonte").innerHTML = `A+ <span class="text-xs">(${baseFontSize}px)</span>`;
+      document.getElementById("diminuirFonte").innerHTML = `A- <span class="text-xs">(${baseFontSize}px)</span>`;
+    }
+
+    updateFontSize();
+
+    document.getElementById("aumentarFonte").onclick = () => {
+      if (baseFontSize < maxFontSize) {
+        baseFontSize = Math.min(maxFontSize, baseFontSize + step);
+        updateFontSize();
+      }
+    };
+
+    document.getElementById("diminuirFonte").onclick = () => {
+      if (baseFontSize > minFontSize) {
+        baseFontSize = Math.max(minFontSize, baseFontSize - step);
+        updateFontSize();
+      }
+    };
+
+    // === RESETAR ACESSIBILIDADE ===
+    document.getElementById("resetarAcessibilidade").onclick = () => {
+      baseFontSize = 16;
+      updateFontSize();
+      document.body.classList.remove('alto-contraste');
+      contrasteAtivo = false;
+      document.getElementById("altoContraste").textContent = "Alto Contraste";
+    };
+
+    // === DEMAIS FUNCIONALIDADES ===
+    window.addEventListener('load', () => {
+      setTimeout(() => document.getElementById('loadingScreen').classList.add('hidden'), 1000);
+    });
+
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('digitalClock').textContent = `${hours}:${minutes}:${seconds}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      const isExpanded = navLinks.classList.toggle('active');
+      navToggle.setAttribute('aria-expanded', isExpanded);
+    });
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('scrollToTop').classList.toggle('active', window.pageYOffset > 300);
+    });
+    document.getElementById('scrollToTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    const btnAcess = document.getElementById("acessibilidadeBtn");
+    const painelAcess = document.getElementById("painelAcessibilidade");
+    btnAcess.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isActive = painelAcess.classList.toggle("active");
+      btnAcess.setAttribute('aria-expanded', isActive);
+    });
+    document.addEventListener("click", (e) => {
+      if (!painelAcess.contains(e.target) && e.target !== btnAcess) {
+        painelAcess.classList.remove("active");
+        btnAcess.setAttribute('aria-expanded', 'false');
+      }
+    });
+  </script>
+</body>
+</html>
