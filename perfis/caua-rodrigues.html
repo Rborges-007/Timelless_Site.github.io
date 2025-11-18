@@ -49,7 +49,6 @@
       object-fit: cover; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       margin: -80px auto 2rem; position: relative; z-index: 10; background: white;
     }
-
     /* Ordem fixa em qualquer tela */
     .content {
       padding: 0 1.5rem 2rem;
@@ -57,7 +56,6 @@
       flex-direction: column;
       gap: 1.5rem;
     }
-
     .card {
       background: #F8FAFC;
       border-radius: 1.25rem;
@@ -86,7 +84,6 @@
       align-items: center;
       gap: 0.5rem;
     }
-
     /* Desktop: 2 colunas (exceto ataques) */
     @media (min-width: 768px) {
       .content {
@@ -96,14 +93,12 @@
       }
       .attack-card { grid-column: 1 / -1; }
     }
-
     @media (max-width: 480px) {
       .header h1 { font-size: 2rem; }
       .header p { font-size: 1rem; }
       .avatar { width: 130px; height: 130px; margin: -65px auto 1.5rem; border-width: 5px; }
       .card { padding: 1.25rem; }
     }
-
     .stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -123,13 +118,28 @@
       gap: 0.9rem; background: #F1F5F9; padding: 1.25rem;
       border-radius: 1.25rem; border: 2px solid #E5E7EB; margin-top: 1rem;
     }
+    /* MUDANÇA: Medalhas agora QUADRADAS */
     .medal {
-      width: 65px; height: 65px; background: white; border-radius: 50%;
-      border: 3px solid var(--purple-light); box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 70px; height: 70px; 
+      background: white; 
+      border-radius: 12px; /* cantos levemente arredondados para ficar moderno */
+      border: 3px solid var(--purple-light); 
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
       transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .medal:hover { transform: scale(1.15) rotate(12deg); border-color: var(--purple); }
-    .medal img { width: 90%; height: 90%; object-fit: contain; }
+    .medal:hover { 
+      transform: scale(1.18) rotate(3deg); 
+      border-color: var(--purple); 
+      box-shadow: 0 12px 28px rgba(109, 40, 217, 0.25);
+    }
+    .medal img { 
+      width: 85%; 
+      height: 85%; 
+      object-fit: contain; 
+    }
     .weapon-card img {
       width: 130px; height: 130px; object-fit: contain;
       filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
@@ -155,24 +165,22 @@
     .btn-voltar:hover { background: var(--purple-dark); transform: translateY(-3px); }
     @media (max-width: 480px) {
       .btn-voltar { top: 8px; left: 8px; padding: 10px 14px; font-size: 0.9rem; }
+      .medal { width: 62px; height: 62px; }
+      .medal img { width: 82%; height: 82%; }
     }
   </style>
 </head>
 <body>
-
   <a href="../index.html" class="btn-voltar">
     <i class="fas fa-arrow-left"></i> Voltar
   </a>
-
   <div class="profile-card">
     <div class="header">
       <h1>Cauã Rodrigues</h1>
       <p>Programador & Designer de Sistemas</p>
     </div>
     <img src="../imagens/cauar1.png" alt="Foto de Cauã Rodrigues" class="avatar">
-
     <div class="content">
-
       <!-- 1. Nível por Classe -->
       <div class="card">
         <h3><i class="fas fa-layer-group"></i> Nível por Classe</h3>
@@ -185,7 +193,6 @@
           <div class="col-span-2 text-center mt-2"><strong>Total: 2</strong></div>
         </div>
       </div>
-
       <!-- 2. Status -->
       <div class="card">
         <h3><i class="fas fa-heartbeat"></i> Status</h3>
@@ -196,7 +203,6 @@
           <div><strong>XP:</strong> 120 / 500</div>
         </div>
       </div>
-
       <!-- 3. Conquistas -->
       <div class="card">
         <h3><i class="fas fa-medal"></i> Conquistas</h3>
@@ -210,7 +216,6 @@
           <div class="medal"><img src="../imagens/tiao.png" alt="Tião"></div>
         </div>
       </div>
-
       <!-- 4. Arma Equipada -->
       <div class="card weapon-card">
         <h3><i class="fas fa-gem"></i> Arma Equipada</h3>
@@ -218,7 +223,6 @@
         <img src="../imagens/lanca.png" alt="Solo de Hades">
         <p class="text-sm text-gray-600 text-center mt-2">+5 Força | +3 Resistência ao Fogo</p>
       </div>
-
       <!-- 5. Habilidades & Ataques (largura total) -->
       <div class="card attack-card">
         <h3><i class="fas fa-bolt"></i> Habilidades & Ataques</h3>
@@ -238,9 +242,7 @@
           <li><strong>K:</strong> (Sem efeito)</li>
         </ul>
       </div>
-
     </div>
   </div>
-
 </body>
 </html>
