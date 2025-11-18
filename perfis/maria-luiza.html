@@ -63,43 +63,18 @@
       border: 6px solid white;
       object-fit: cover;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      margin: -80px auto 1.5rem;
+      margin: -80px auto 2rem;
       position: relative;
       z-index: 10;
       background: white;
     }
+
+    /* NOVA ESTRUTURA RESPONSIVA (mobile first) */
     .content {
-      padding: 1rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-    }
-
-    /* Responsividade total */
-    @media (max-width: 768px) {
-      body { padding: 1rem 0.75rem; }
-      .header {
-        padding: 1.75rem 1rem;
-      }
-      .header h1 { font-size: 2rem; }
-      .header p { font-size: 1rem; }
-      .avatar {
-        width: 130px;
-        height: 130px;
-        margin: -65px auto 1rem;
-        border-width: 5px;
-      }
-      .content {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        padding: 0.75rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header h1 { font-size: 1.8rem; }
-      .avatar { width: 120px; height: 120px; margin: -60px auto 1rem; }
-      .card { padding: 1.25rem; }
+      padding: 0 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     .card {
@@ -132,6 +107,31 @@
       align-items: center;
       gap: 0.5rem;
     }
+
+    /* Em telas grandes volta ao layout 2 colunas (opcional) */
+    @media (min-width: 768px) {
+      .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .attack-card {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 { font-size: 2rem; }
+      .header p { font-size: 1rem; }
+      .avatar { 
+        width: 130px; 
+        height: 130px; 
+        margin: -65px auto 1.5rem;
+        border-width: 5px;
+      }
+      .card { padding: 1.25rem; }
+    }
+
     .stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -146,8 +146,6 @@
       color: var(--purple-dark);
       text-align: center;
     }
-
-    /* Medalhas responsivas */
     .medal-container {
       display: flex;
       justify-content: center;
@@ -181,7 +179,6 @@
       height: 90%;
       object-fit: contain;
     }
-
     .weapon-card img {
       width: 130px;
       height: 130px;
@@ -191,13 +188,12 @@
       border-radius: 1rem;
       background: white;
       padding: 0.5rem;
+      display: block;
     }
-
     .attack-list {
       font-size: 0.9rem;
-      line-height: 1.8;
+      line-height: 1.9;
       color: var(--gray);
-      padding-left: 0.5rem;
     }
     .attack-list li {
       margin-bottom: 0.6rem;
@@ -211,8 +207,6 @@
       position: absolute;
       left: 0;
     }
-
-    /* Botão Voltar otimizado para mobile */
     .btn-voltar {
       position: fixed;
       top: 12px;
@@ -246,6 +240,7 @@
   </style>
 </head>
 <body>
+
   <a href="../index.html" class="btn-voltar">
     <i class="fas fa-arrow-left"></i> Voltar
   </a>
@@ -258,18 +253,8 @@
     <img src="../imagens/malu.png" alt="Foto de Maria Luiza" class="avatar">
 
     <div class="content">
-      <!-- Status -->
-      <div class="card">
-        <h3><i class="fas fa-heartbeat"></i> Status</h3>
-        <div class="stat-grid">
-          <div><strong>Vida:</strong> <span class="highlight">45</span></div>
-          <div><strong>Nível:</strong> <span class="highlight">9</span></div>
-          <div><strong>Moedas:</strong> <span class="highlight">85</span></div>
-          <div><strong>XP:</strong> 1.800 / 2.500</div>
-        </div>
-      </div>
 
-      <!-- Níveis por Classe -->
+      <!-- 1º - Nível por Classe -->
       <div class="card">
         <h3><i class="fas fa-layer-group"></i> Nível por Classe</h3>
         <div class="stat-grid">
@@ -282,7 +267,18 @@
         </div>
       </div>
 
-      <!-- Conquistas -->
+      <!-- 2º - Status -->
+      <div class="card">
+        <h3><i class="fas fa-heartbeat"></i> Status</h3>
+        <div class="stat-grid">
+          <div><strong>Vida:</strong> <span class="highlight">45</span></div>
+          <div><strong>Nível:</strong> <span class="highlight">9</span></div>
+          <div><strong>Moedas:</strong> <span class="highlight">85</span></div>
+          <div><strong>XP:</strong> 1.800 / 2.500</div>
+        </div>
+      </div>
+
+      <!-- 3º - Conquistas -->
       <div class="card">
         <h3><i class="fas fa-medal"></i> Conquistas</h3>
         <div class="medal-container">
@@ -297,16 +293,16 @@
         </div>
       </div>
 
-      <!-- Arma -->
+      <!-- 4º - Arma Equipada -->
       <div class="card weapon-card">
         <h3><i class="fas fa-seedling"></i> Arma Equipada</h3>
-        <p class="font-bold text-lg text-purple-700">Girassol Flourescente</p>
+        <p class="font-bold text-lg text-purple-700 text-center">Girassol Flourescente</p>
         <img src="../imagens/espadamalu.png" alt="Girassol Flourescente">
-        <p class="text-sm text-gray-600 mt-2">+4 Crescimento | +2 Regeneração</p>
+        <p class="text-sm text-gray-600 text-center mt-2">+4 Crescimento | +2 Regeneração</p>
       </div>
 
-      <!-- Habilidades & Ataques -->
-      <div class="card" style="grid-column: 1 / -1;">
+      <!-- 5º - Habilidades & Ataques (sempre por último e largura total) -->
+      <div class="card attack-card">
         <h3><i class="fas fa-bolt"></i> Habilidades & Ataques</h3>
         <ul class="attack-list">
           <li><strong>Ás:</strong> 1 de dano</li>
@@ -324,7 +320,9 @@
           <li><strong>K - Redirecionamento Vital:</strong> Quando cair no K, posso redirecionar minha vida para alguém.</li>
         </ul>
       </div>
+
     </div>
   </div>
+
 </body>
 </html>
