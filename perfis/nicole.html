@@ -11,7 +11,7 @@
     :root {
       --purple: #6D28D9;
       --purple-light: #A78BFA;
-      --purple-dark: #4C1D95;
+      --purple-dark: #4C1D;
       --lavender: #E9D5FF;
       --gray: #6B7280;
       --dark: #1F2937;
@@ -43,38 +43,15 @@
     .avatar {
       width: 160px; height: 160px; border-radius: 50%; border: 6px solid white;
       object-fit: cover; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      margin: -80px auto 1.5rem; position: relative; z-index: 10; background: white;
-    }
-    .content {
-      padding: 1rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+      margin: -80px auto 2rem; position: relative; z-index: 10; background: white;
     }
 
-    /* ORDEM CORRETA EM MOBILE */
-    @media (max-width: 768px) {
-      body { padding: 1rem 0.75rem; }
-      .header { padding: 1.75rem 1rem; }
-      .header h1 { font-size: 2rem; }
-      .header p { font-size: 1rem; }
-      .avatar { width: 130px; height: 130px; margin: -65px auto 1rem; border-width: 5px; }
-      .content {
-        grid-template-columns: 1fr;   /* 1 coluna */
-        gap: 1rem;
-        padding: 0.75rem;
-      }
-      /* Força a ordem correta em mobile */
-      .content { display: flex; flex-direction: column; }
-      .card-status      { order: 1; }
-      .card-classes     { order: 2; }
-      .card-conquistas  { order: 3; }
-      .card-arma        { order: 4; }
-      .card-habilidades { order: 5; }
-    }
-    @media (max-width: 480px) {
-      .header h1 { font-size: 1.8rem; }
-      .avatar { width: 120px; height: 120px; margin: -60px auto 1rem; }
+    /* Mobile-first: tudo empilhado na ordem certa */
+    .content {
+      padding: 0 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     .card {
@@ -90,6 +67,11 @@
       width: 100%; height: 4px;
       background: linear-gradient(to right, var(--purple), var(--purple-light));
     }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(109, 40, 217, 0.15);
+      border-color: var(--purple-light);
+    }
     .card h3 {
       color: var(--purple-dark);
       font-size: 1.2rem;
@@ -99,6 +81,24 @@
       align-items: center;
       gap: 0.5rem;
     }
+
+    /* Desktop: volta ao grid de 2 colunas */
+    @media (min-width: 768px) {
+      .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .attack-card { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 { font-size: 2rem; }
+      .header p { font-size: 1rem; }
+      .avatar { width: 130px; height: 130px; margin: -65px auto 1.5rem; border-width: 5px; }
+      .card { padding: 1.25rem; }
+    }
+
     .stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -129,9 +129,10 @@
       width: 130px; height: 130px; object-fit: contain;
       filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
       margin: 1rem auto; border-radius: 1rem; background: white; padding: 0.5rem;
+      display: block;
     }
     .attack-list {
-      font-size: 0.9rem; line-height: 1.8; color: var(--gray); padding-left: 0.5rem;
+      font-size: 0.9rem; line-height: 1.9; color: var(--gray);
     }
     .attack-list li {
       margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;
@@ -153,7 +154,10 @@
   </style>
 </head>
 <body>
-  <a href="../index.html" class="btn-voltar">Voltar</a>
+
+  <a href="../index.html" class="btn-voltar">
+    <i class="fas fa-arrow-left"></i> Voltar
+  </a>
 
   <div class="profile-card">
     <div class="header">
@@ -163,20 +167,10 @@
     <img src="../imagens/nicolea.png" alt="Nicole" class="avatar">
 
     <div class="content">
-      <!-- 1. Status -->
-      <div class="card card-status">
-        <h3>Status</h3>
-        <div class="stat-grid">
-          <div><strong>Vida:</strong> <span class="highlight">35</span></div>
-          <div><strong>Nível:</strong> <span class="highlight">8</span></div>
-          <div><strong>Moedas:</strong> <span class="highlight">37</span></div>
-          <div><strong>XP:</strong> 680 / 1.000</div>
-        </div>
-      </div>
 
-      <!-- 2. Nível por Classe -->
-      <div class="card card-classes">
-        <h3>Nível por Classe</h3>
+      <!-- 1º - Nível por Classe -->
+      <div class="card">
+        <h3><i class="fas fa-layer-group"></i> Nível por Classe</h3>
         <div class="stat-grid">
           <div>Mago: <strong>2</strong></div>
           <div>Mercador: <strong>3</strong></div>
@@ -187,9 +181,20 @@
         </div>
       </div>
 
-      <!-- 3. Conquistas -->
-      <div class="card card-conquistas">
-        <h3>Conquistas</h3>
+      <!-- 2º - Status -->
+      <div class="card">
+        <h3><i class="fas fa-heartbeat"></i> Status</h3>
+        <div class="stat-grid">
+          <div><strong>Vida:</strong> <span class="highlight">35</span></div>
+          <div><strong>Nível:</strong> <span class="highlight">8</span></div>
+          <div><strong>Moedas:</strong> <span class="highlight">37</span></div>
+          <div><strong>XP:</strong> 680 / 1.000</div>
+        </div>
+      </div>
+
+      <!-- 3º - Conquistas -->
+      <div class="card">
+        <h3><i class="fas fa-medal"></i> Conquistas</h3>
         <div class="medal-container">
           <div class="medal"><img src="../imagens/espantalho.png" alt="Espantalho"></div>
           <div class="medal"><img src="../imagens/reigoblin.png" alt="Rei Goblin"></div>
@@ -200,17 +205,17 @@
         </div>
       </div>
 
-      <!-- 4. Arma -->
-      <div class="card card-arma weapon-card">
-        <h3>Arma Equipada</h3>
-        <p class="font-bold text-lg text-purple-700">Lâmina do Crepúsculo</p>
+      <!-- 4º - Arma Equipada -->
+      <div class="card weapon-card">
+        <h3><i class="fas fa-gem"></i> Arma Equipada</h3>
+        <p class="font-bold text-lg text-purple-700 text-center">Lâmina do Crepúsculo</p>
         <img src="../imagens/espada.png" alt="Lâmina do Crepúsculo">
-        <p class="text-sm text-gray-600 mt-2">+4 Velocidade | +2 Ataque Noturno</p>
+        <p class="text-sm text-gray-600 text-center mt-2">+4 Velocidade | +2 Ataque Noturno</p>
       </div>
 
-      <!-- 5. Habilidades (sempre por último e em tela cheia) -->
-      <div class="card card-habilidades">
-        <h3>Habilidades & Ataques</h3>
+      <!-- 5º - Habilidades & Ataques (largura total) -->
+      <div class="card attack-card">
+        <h3><i class="fas fa-bolt"></i> Habilidades & Ataques</h3>
         <ul class="attack-list">
           <li><strong>A:</strong> 3 de dano</li>
           <li><strong>2:</strong> 7 de dano</li>
@@ -225,7 +230,9 @@
           <li><strong>K - Adiamento:</strong> Se receber dano na mesma rodada, o dano só será aplicado após 2 rodadas.</li>
         </ul>
       </div>
+
     </div>
   </div>
+
 </body>
 </html>
