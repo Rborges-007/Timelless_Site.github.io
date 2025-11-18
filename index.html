@@ -256,24 +256,24 @@
     
     /* MUDANÇA 2: Botão de acessibilidade com emoji do cadeirante */
     .acessibilidade-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--cor-orange);
-      color: var(--cor-light);
-      border: none;
-      border-radius: 50%;
-      width: 56px;
-      height: 56px;
-      font-size: 32px;
-      cursor: pointer;
-      z-index: 2000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
-    }
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--cor-orange);
+        color: var(--cor-light);
+        border: none;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+        font-size: 34px;
+        cursor: pointer;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+        }
     
     .acessibilidade-btn:hover {
       transform: scale(1.1);
@@ -841,18 +841,21 @@
   </footer>
 
   <!-- Scroll to Top & Accessibility -->
-  <button class="scroll-to-top" id="scrollToTop" aria-label="Voltar ao topo"><i class="fas fa-chevron-up" aria-hidden="true"></i></button>
-  
-  <!-- MUDANÇA 2: emoji do cadeirante -->
-  <button id="acessibilidadeBtn" class="acessibilidade-btn" aria-label="Abrir menu de acessibilidade">Wheelchair</button>
-  
+  <button class="scroll-to-top" id="scrollToTop" aria-label="Voltar ao topo">
+    <i class="fas fa-chevron-up" aria-hidden="true"></i>
+  </button>
+
+  <!-- BOTÃO DE ACESSIBILIDADE COM O EMOJI DO CADEIRANTE (AGORA APARECE EM TODOS OS DISPOSITIVOS) -->
+  <button id="acessibilidadeBtn" class="acessibilidade-btn" aria-label="Abrir menu de acessibilidade">
+    ♿
+  </button>
+
   <div id="painelAcessibilidade" class="painel-acessibilidade" role="menu" aria-label="Opções de acessibilidade">
     <button id="aumentarFonte" aria-label="Aumentar tamanho da fonte em 2px">A+ <span class="text-xs">(16px)</span></button>
     <button id="diminuirFonte" aria-label="Diminuir tamanho da fonte em 2px">A- <span class="text-xs">(16px)</span></button>
     <button id="altoContraste" aria-label="Ativar modo de alto contraste">Alto Contraste</button>
     <button id="resetarAcessibilidade" aria-label="Resetar configurações de acessibilidade">Resetar</button>
   </div>
-
   <!-- JavaScript (exatamente o mesmo de antes) -->
   <script>
     // === ROLAGEM SUAVE COM FOCO NO TÍTULO ===
