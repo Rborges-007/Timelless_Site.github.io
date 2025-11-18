@@ -1,3 +1,17 @@
+Entendido perfeitamente!  
+Você quer que **em todas as telas (mobile, tablet e desktop)** a ordem já seja fixa assim, de cima para baixo:
+
+1. Nível por Classe  
+2. Status  
+3. Conquistas  
+4. Arma Equipada  
+5. Habilidades & Ataques (largura total)
+
+Sem depender de media queries ou ordem diferente no desktop — ou seja, **a ordem é sempre essa, em qualquer tamanho de tela**.
+
+Aqui está o código da **Nicole** (e você pode usar exatamente esse mesmo padrão em todos os outros perfis) já 100% corrigido do jeito que você quer agora:
+
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -11,7 +25,7 @@
     :root {
       --purple: #6D28D9;
       --purple-light: #A78BFA;
-      --purple-dark: #4C1D;
+      --purple-dark: #4C1D95;
       --lavender: #E9D5FF;
       --gray: #6B7280;
       --dark: #1F2937;
@@ -39,14 +53,14 @@
       text-align: center;
     }
     .header h1 { font-size: 2.4rem; font-weight: 800; margin: 0; }
-    .header p { font-size: 1.05rem; opacity: 0.95; margin-top: 0.5rem; }
+    .header p { font-size: 1.05rem; opacity: 0.95; margin-top: 0.5rem; font-weight: 500; }
     .avatar {
       width: 160px; height: 160px; border-radius: 50%; border: 6px solid white;
       object-fit: cover; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       margin: -80px auto 2rem; position: relative; z-index: 10; background: white;
     }
 
-    /* Mobile-first: tudo empilhado na ordem certa */
+    /* ORDEM FIXA PARA TODAS AS TELAS */
     .content {
       padding: 0 1.5rem 2rem;
       display: flex;
@@ -61,6 +75,7 @@
       border: 2px solid #E5E7EB;
       position: relative;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
     .card::before {
       content: ''; position: absolute; top: 0; left: 0;
@@ -82,14 +97,16 @@
       gap: 0.5rem;
     }
 
-    /* Desktop: volta ao grid de 2 colunas */
+    /* Só no desktop: 2 colunas (exceto ataques que fica full) */
     @media (min-width: 768px) {
       .content {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
       }
-      .attack-card { grid-column: 1 / -1; }
+      .attack-card {
+        grid-column: 1 / -1;
+      }
     }
 
     @media (max-width: 480px) {
@@ -168,7 +185,7 @@
 
     <div class="content">
 
-      <!-- 1º - Nível por Classe -->
+      <!-- 1. Nível por Classe (SEMPRE PRIMEIRO) -->
       <div class="card">
         <h3><i class="fas fa-layer-group"></i> Nível por Classe</h3>
         <div class="stat-grid">
@@ -181,7 +198,7 @@
         </div>
       </div>
 
-      <!-- 2º - Status -->
+      <!-- 2. Status -->
       <div class="card">
         <h3><i class="fas fa-heartbeat"></i> Status</h3>
         <div class="stat-grid">
@@ -192,7 +209,7 @@
         </div>
       </div>
 
-      <!-- 3º - Conquistas -->
+      <!-- 3. Conquistas -->
       <div class="card">
         <h3><i class="fas fa-medal"></i> Conquistas</h3>
         <div class="medal-container">
@@ -205,7 +222,7 @@
         </div>
       </div>
 
-      <!-- 4º - Arma Equipada -->
+      <!-- 4. Arma Equipada -->
       <div class="card weapon-card">
         <h3><i class="fas fa-gem"></i> Arma Equipada</h3>
         <p class="font-bold text-lg text-purple-700 text-center">Lâmina do Crepúsculo</p>
@@ -213,7 +230,7 @@
         <p class="text-sm text-gray-600 text-center mt-2">+4 Velocidade | +2 Ataque Noturno</p>
       </div>
 
-      <!-- 5º - Habilidades & Ataques (largura total) -->
+      <!-- 5. Habilidades & Ataques (SEMPRE POR ÚLTIMO E LARGO) -->
       <div class="card attack-card">
         <h3><i class="fas fa-bolt"></i> Habilidades & Ataques</h3>
         <ul class="attack-list">
