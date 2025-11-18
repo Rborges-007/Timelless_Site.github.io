@@ -12,8 +12,6 @@
       --purple: #6D28D9;
       --purple-light: #A78BFA;
       --purple-dark: #4C1D95;
-      --lavender: #E9D5FF;
-      --light: #FAF5FF;
       --gray: #6B7280;
       --dark: #1F2937;
     }
@@ -44,52 +42,30 @@
       padding: 2rem 1.5rem;
       text-align: center;
     }
-    .header h1 {
-      font-size: 2.4rem;
-      font-weight: 800;
-      margin: 0;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .header p {
-      font-size: 1.05rem;
-      opacity: 0.95;
-      margin-top: 0.5rem;
-      font-weight: 500;
-    }
+    .header h1 { font-size: 2.4rem; font-weight: 800; margin: 0; }
+    .header p { font-size: 1.05rem; opacity: 0.95; margin-top: 0.5rem; font-weight: 500; }
     .avatar {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      border: 6px solid white;
-      object-fit: cover;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      margin: -80px auto 2rem;
-      position: relative;
-      z-index: 10;
-      background: white;
+      width: 160px; height: 160px; border-radius: 50%; border: 6px solid white;
+      object-fit: cover; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      margin: -80px auto 2rem; position: relative; z-index: 10; background: white;
     }
-
-    /* Estrutura mobile-first (tudo empilhado) */
     .content {
       padding: 0 1.5rem 2rem;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
-
     .card {
       background: #F8FAFC;
       border-radius: 1.25rem;
       padding: 1.5rem;
       border: 2px solid #E5E7EB;
-      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
     .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
+      content: ''; position: absolute; top: 0; left: 0;
       width: 100%; height: 4px;
       background: linear-gradient(to right, var(--purple), var(--purple-light));
     }
@@ -107,31 +83,20 @@
       align-items: center;
       gap: 0.5rem;
     }
-
-    /* Desktop: volta ao grid de 2 colunas */
     @media (min-width: 768px) {
       .content {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
       }
-      .attack-card {
-        grid-column: 1 / -1;
-      }
+      .attack-card { grid-column: 1 / -1; }
     }
-
     @media (max-width: 480px) {
       .header h1 { font-size: 2rem; }
       .header p { font-size: 1rem; }
-      .avatar {
-        width: 130px;
-        height: 130px;
-        margin: -65px auto 1.5rem;
-        border-width: 5px;
-      }
+      .avatar { width: 130px; height: 130px; margin: -65px auto 1.5rem; border-width: 5px; }
       .card { padding: 1.25rem; }
     }
-
     .stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -147,95 +112,42 @@
       text-align: center;
     }
     .medal-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 0.9rem;
-      background: #F1F5F9;
-      padding: 1.25rem;
-      border-radius: 1.25rem;
-      border: 2px solid #E5E7EB;
-      margin-top: 1rem;
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 0.9rem; background: #F1F5F9; padding: 1.25rem;
+      border-radius: 1.25rem; border: 2px solid #E5E7EB; margin-top: 1rem;
     }
     .medal {
-      width: 65px;
-      height: 65px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 3px solid var(--purple-light);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 65px; height: 65px; background: white; border-radius: 50%;
+      border: 3px solid var(--purple-light); box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: all 0.3s ease;
     }
-    .medal:hover {
-      transform: scale(1.15) rotate(12deg);
-      box-shadow: 0 8px 20px rgba(167, 139, 250, 0.3);
-      border-color: var(--purple);
-    }
-    .medal img {
-      width: 90%;
-      height: 90%;
-      object-fit: contain;
-    }
+    .medal:hover { transform: scale(1.15) rotate(12deg); border-color: var(--purple); }
+    .medal img { width: 90%; height: 90%; object-fit: contain; }
     .weapon-card img {
-      width: 130px;
-      height: 130px;
-      object-fit: contain;
+      width: 130px; height: 130px; object-fit: contain;
       filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
-      margin: 1rem auto;
-      border-radius: 1rem;
-      background: white;
-      padding: 0.5rem;
+      margin: 1rem auto; border-radius: 1rem; background: white; padding: 0.5rem;
       display: block;
     }
     .attack-list {
-      font-size: 0.9rem;
-      line-height: 1.9;
-      color: var(--gray);
+      font-size: 0.9rem; line-height: 1.9; color: var(--gray);
     }
     .attack-list li {
-      margin-bottom: 0.6rem;
-      padding-left: 1.5rem;
-      position: relative;
+      margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;
     }
     .attack-list li::before {
-      content: "→";
-      color: var(--purple);
-      font-weight: bold;
-      position: absolute;
-      left: 0;
+      content: "→"; color: var(--purple); font-weight: bold; position: absolute; left: 0;
     }
     .btn-voltar {
-      position: fixed;
-      top: 12px;
-      left: 12px;
-      z-index: 1000;
-      background: var(--purple);
-      color: white;
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 8px 20px rgba(109, 40, 217, 0.3);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.95rem;
+      position: fixed; top: 12px; left: 12px; z-index: 1000;
+      background: var(--purple); color: white; padding: 10px 16px;
+      border-radius: 12px; font-weight: 600; text-decoration: none;
+      box-shadow: 0 8px 20px rgba(109, 40, 217, 0.3); transition: all 0.3s;
+      display: flex; align-items: center; gap: 8px; font-size: 0.95rem;
     }
-    .btn-voltar:hover {
-      background: var(--purple-dark);
-      transform: translateY(-3px);
-    }
+    .btn-voltar:hover { background: var(--purple-dark); transform: translateY(-3px); }
     @media (max-width: 480px) {
-      .btn-voltar {
-        top: 8px;
-        left: 8px;
-        padding: 10px 14px;
-        font-size: 0.9rem;
-      }
+      .btn-voltar { top: 8px; left: 8px; padding: 10px 14px; font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -250,11 +162,11 @@
       <h1>Maria Queirós</h1>
       <p>Arqueira Celestial & Estrategista</p>
     </div>
-    <img src="../imagens/boneca_queiroz.png" alt="Foto de Maria Queirós" class="avatar">
+    <img src="../imagens/boneca_queiroz.png" alt="Maria Queirós" class="avatar">
 
     <div class="content">
 
-      <!-- 1º - Nível por Classe -->
+      <!-- 1. Nível por Classe -->
       <div class="card">
         <h3><i class="fas fa-layer-group"></i> Nível por Classe</h3>
         <div class="stat-grid">
@@ -267,7 +179,7 @@
         </div>
       </div>
 
-      <!-- 2º - Status -->
+      <!-- 2. Status -->
       <div class="card">
         <h3><i class="fas fa-heartbeat"></i> Status</h3>
         <div class="stat-grid">
@@ -278,7 +190,7 @@
         </div>
       </div>
 
-      <!-- 3º - Conquistas -->
+      <!-- 3. Conquistas -->
       <div class="card">
         <h3><i class="fas fa-medal"></i> Conquistas</h3>
         <div class="medal-container">
@@ -293,7 +205,7 @@
         </div>
       </div>
 
-      <!-- 4º - Arma Equipada -->
+      <!-- 4. Arma Equipada -->
       <div class="card weapon-card">
         <h3><i class="fas fa-gem"></i> Arma Equipada</h3>
         <p class="font-bold text-lg text-purple-700 text-center">Arco Angelical</p>
@@ -301,7 +213,7 @@
         <p class="text-sm text-gray-600 text-center mt-2">+5 Precisão | +3 Dano Crítico</p>
       </div>
 
-      <!-- 5º - Habilidades & Ataques (largura total) -->
+      <!-- 5. Habilidades & Ataques (largura total) -->
       <div class="card attack-card">
         <h3><i class="fas fa-bolt"></i> Habilidades & Ataques</h3>
         <ul class="attack-list">
