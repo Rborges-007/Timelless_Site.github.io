@@ -27,7 +27,7 @@
     }
     
     html {
-      font-size: 16px; /* Controlado pelo JavaScript */
+      font-size: 16px;
     }
     
     html, body { 
@@ -171,6 +171,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+      overflow: center;
       overflow: hidden;
       background: linear-gradient(135deg, #1E3A8A 0%, #4169E1 100%);
       margin-top: 110px;
@@ -184,15 +185,15 @@
       padding: 0 20px;
     }
     
+    /* MUDANÇA 1: Título Timeless agora BRANCO PURO */
     .hero-title {
       font-size: 4rem;
       font-weight: 800;
       margin-bottom: 1rem;
       text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-      background: linear-gradient(to right, var(--cor-pink), var(--cor-orange));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      color: #FFFFFF !important;
     }
     
     .hero-subtitle {
@@ -253,6 +254,7 @@
       transform: translateY(-3px);
     }
     
+    /* MUDANÇA 2: Botão de acessibilidade com emoji do cadeirante */
     .acessibilidade-btn {
       position: fixed;
       bottom: 20px;
@@ -263,7 +265,7 @@
       border-radius: 50%;
       width: 56px;
       height: 56px;
-      font-size: 26px;
+      font-size: 32px;
       cursor: pointer;
       z-index: 2000;
       display: flex;
@@ -456,7 +458,6 @@
       </div>
     </div>
   </section>
-
   <!-- Content Sections -->
   <section class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -841,7 +842,10 @@
 
   <!-- Scroll to Top & Accessibility -->
   <button class="scroll-to-top" id="scrollToTop" aria-label="Voltar ao topo"><i class="fas fa-chevron-up" aria-hidden="true"></i></button>
-  <button id="acessibilidadeBtn" class="acessibilidade-btn" aria-label="Abrir menu de acessibilidade">Acessibilidade</button>
+  
+  <!-- MUDANÇA 2: emoji do cadeirante -->
+  <button id="acessibilidadeBtn" class="acessibilidade-btn" aria-label="Abrir menu de acessibilidade">Wheelchair</button>
+  
   <div id="painelAcessibilidade" class="painel-acessibilidade" role="menu" aria-label="Opções de acessibilidade">
     <button id="aumentarFonte" aria-label="Aumentar tamanho da fonte em 2px">A+ <span class="text-xs">(16px)</span></button>
     <button id="diminuirFonte" aria-label="Diminuir tamanho da fonte em 2px">A- <span class="text-xs">(16px)</span></button>
@@ -849,7 +853,7 @@
     <button id="resetarAcessibilidade" aria-label="Resetar configurações de acessibilidade">Resetar</button>
   </div>
 
-  <!-- JavaScript -->
+  <!-- JavaScript (exatamente o mesmo de antes) -->
   <script>
     // === ROLAGEM SUAVE COM FOCO NO TÍTULO ===
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -905,7 +909,7 @@
       document.getElementById("altoContraste").textContent = contrasteAtivo ? "Desativar Contraste" : "Alto Contraste";
     };
 
-    // === ACESSIBILIDADE DE FONTE: +2px / -2px POR CLIQUE ===
+    // === ACESSIBILIDADE DE FONTE ===
     let baseFontSize = 16;
     const minFontSize = 10;
     const maxFontSize = 30;
@@ -980,11 +984,10 @@
     });
     document.addEventListener("click", (e) => {
       if (!painelAcess.contains(e.target) && e.target !== btnAcess) {
-        painelAcess.classList.remove("active");
+        painelAcess.classList.remove('active');
         btnAcess.setAttribute('aria-expanded', 'false');
       }
     });
   </script>
 </body>
 </html>
-
